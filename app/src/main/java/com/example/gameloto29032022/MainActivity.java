@@ -1,17 +1,22 @@
 package com.example.gameloto29032022;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
     TextView mTvOutput, mTvHistory;
     Button mBtnReset, mBtnPlay;
+    ArrayList<Integer> mArrNumbers;
+    Random mRandom;
+    String mTextResult = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,18 +28,25 @@ public class MainActivity extends AppCompatActivity {
         mBtnReset = findViewById(R.id.buttonReset);
         mBtnPlay = findViewById(R.id.buttonPlay);
 
-        // ArrayList
-        ArrayList<String> arr = new ArrayList<>();
+        //Khai báo
+        mArrNumbers = new ArrayList<>();
+        mRandom = new Random();
 
-        // thêm
-        arr.add("A"); // 0
-        arr.add("B"); // 1
-        arr.add("C"); // 2
+        //Thêm số vào mảng
+        for (int i = 1; i <= 100; i++) {
+            mArrNumbers.add(i);
+        }
 
-        // xóa
-        arr.remove(0);
+        mBtnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                int index = mRandom.nextInt(mArrNumbers.size());
+                int value = mArrNumbers.get(index);
+                mTvOutput.setText(value + "");
+                mTextResult = value + " - " + mTextResult;
+                mTvHistory.setText(mTextResult);
+            }
+        });
 
-        // cập nhật
-        arr.set(0 , "d");
     }
 }
